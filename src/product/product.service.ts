@@ -1,26 +1,47 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { Product } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(private readonly prisma: PrismaService) {}
+
+  async findAll(): Promise<Product[]> {
+    return this.prisma.product.findMany();
   }
 
-  findAll() {
-    return `This action returns all product`;
+  async findById(id: string): Promise<Product> {
+    const record = await this.prisma.product.findUnique({
+      where: { id },
+    });
+    if (!record) {
+      throw new NotFoundException(`Registro com o '${id}' não encontrado.`)
+    }
+    return record
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string): Promise<Product> {
+    return this.findById(id);
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async create(data: CreateProductDto): Promise<Product> {
+    return this.prisma.product.create({ data });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async update(id: string, dto: CreateProductDto): Promise<Product> {
+    await this.findById(id)
+
+    const data:Partial<Product>={...dto};
+    return this.prisma.product.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async delete(id: string): Promise<Product> {
+    return this.prisma.product.delete({
+      where: { id },
+    });
   }
 }
