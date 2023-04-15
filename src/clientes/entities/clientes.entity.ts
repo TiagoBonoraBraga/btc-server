@@ -1,5 +1,6 @@
+
 export class Cliente{
-    id: string;
+    id?: string;
     idSistema: string;
     nome: string;
     idFranquia: string;

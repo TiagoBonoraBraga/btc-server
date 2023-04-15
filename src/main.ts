@@ -10,6 +10,8 @@ async function bootstrap() {
     .setDescription('Api para franqueados')
     .setVersion('1.0')
     .addTag('Franqueado')
+    .addTag('Clientes')
+    .addTag('Produtos')
     .build()
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document)

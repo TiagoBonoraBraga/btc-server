@@ -1,7 +1,9 @@
-import { Body, Controller, Delete, Get, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { ClientesService } from "./clientes.service";
 import { CreateClientesDto, } from "./dto/create-cliente.dto";
+import { ApiTags, ApiParam } from "@nestjs/swagger";
 
+@ApiTags('Clientes')
 @Controller('clientes')
 export class ClientesController {
     constructor (private clientesService: ClientesService){}
@@ -27,9 +29,15 @@ export class ClientesController {
         return this.clientesService.updade()
     }
 
-    @Delete()
-    remove(){
-        return this.clientesService.remove()
-    }
+    @Delete(':id')
+  @ApiParam({
+    name: 'id',
+    required: true,
+    type: 'number',
+  })
+  remove(@Param('id') id) {
+    id = parseInt(id);
+    return this.clientesService.remove(id);
+  }
 
 }
