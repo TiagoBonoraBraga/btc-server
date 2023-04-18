@@ -11,7 +11,7 @@ export class ProductService {
     return this.prisma.product.findMany();
   }
 
-  async findById(id: string): Promise<Product> {
+  async findById(id: number): Promise<Product> {
     const record = await this.prisma.product.findUnique({
       where: { id },
     });
@@ -21,7 +21,7 @@ export class ProductService {
     return record
   }
 
-  async findOne(id: string): Promise<Product> {
+  async findOne(id: number): Promise<Product> {
     return this.findById(id);
   }
 
@@ -29,17 +29,22 @@ export class ProductService {
     return this.prisma.product.create({ data });
   }
 
-  async update(id: string, dto: CreateProductDto): Promise<Product> {
-    await this.findById(id)
-
-    const data:Partial<Product>={...dto};
-    return this.prisma.product.update({
+ 
+  async update(id: number, data: CreateProductDto): Promise<Product> {
+    const existingProduct = await this.prisma.product.findUnique({ where: { name: data.name, } });
+    if (existingProduct && existingProduct.id !== id) {
+      throw new Error(`Produto com nome '${data.name}' existente`);
+    }
+    
+    const product = await this.prisma.product.update({
       where: { id },
       data,
     });
+  
+    return product;
   }
 
-  async delete(id: string): Promise<Product> {
+  async delete(id: number): Promise<Product> {
     return this.prisma.product.delete({
       where: { id },
     });

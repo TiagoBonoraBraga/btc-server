@@ -4,7 +4,7 @@ import { ProductService } from './product.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dto/create-product.dto';
 
-@ApiTags('products')
+@ApiTags('product')
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) { }
@@ -21,8 +21,8 @@ export class ProductController {
   @ApiOperation({
     summary: "Visualizar produtos por ID"
   })
-  async findOne(@Param('id') id: string): Promise<Product> {
-    return await this.productService.findOne(id);
+  async findOne(@Param('id') id: number): Promise<Product> {
+    return await this.productService.findOne(+id);
   }
 
   @Post()
@@ -38,17 +38,17 @@ export class ProductController {
     summary: "Atualizar produtos pelo ID"
   })
   async update(
-    @Param('id') id: string,
+    @Param('id') id: number,
     @Body() data: CreateProductDto,
   ): Promise<Product> {
-    return await this.productService.update(id, data);
+    return await this.productService.update(+id, data);
   }
 
   @Delete(':id')
   @ApiOperation({
     summary: "Deletar produtos pelo Id"
   })
-  async delete(@Param('id') id: string) {
-    return await this.productService.delete(id);
+  async delete(@Param('id') id: number) {
+    return await this.productService.delete(+id);
   }
 }

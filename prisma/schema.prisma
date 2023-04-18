@@ -1,19 +1,18 @@
 datasource db {
-    provider = "postgresql"
-    url      = "postgresql://postgres:12345@localhost:5432/hiperlocal"
-  }
-  
-  generator client {
-    provider = "prisma-client-js"
-  }
-  
-  model Product {
-    id          Int     @id @default(autoincrement())
-    name        String @unique
-    description String
-    score       Int
-    
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-  }
-  
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Product {
+  id          Int    @id @default(autoincrement())
+  name        String @unique
+  description String
+  score       Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
