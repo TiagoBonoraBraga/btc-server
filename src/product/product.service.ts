@@ -5,7 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 
 @Injectable()
 export class ProductService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async findAll(): Promise<Product[]> {
     return this.prisma.product.findMany();
@@ -26,21 +26,28 @@ export class ProductService {
   }
 
   async create(data: CreateProductDto): Promise<Product> {
-    return this.prisma.product.create({ data });
+    const existingProduct = await this.prisma.product.findUnique({ where: { name: data.name } });
+    if (existingProduct) {
+      throw new Error(`Já existe um produto com o nome '${data.name}'.`);
+    }
+
+    const product = await this.prisma.product.create({ data });
+
+    return product;
   }
 
- 
+
   async update(id: number, data: CreateProductDto): Promise<Product> {
     const existingProduct = await this.prisma.product.findUnique({ where: { name: data.name, } });
     if (existingProduct && existingProduct.id !== id) {
       throw new Error(`Produto com nome '${data.name}' existente`);
     }
-    
+
     const product = await this.prisma.product.update({
       where: { id },
       data,
     });
-  
+
     return product;
   }
 
