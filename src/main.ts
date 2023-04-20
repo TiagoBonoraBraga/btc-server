@@ -9,14 +9,14 @@ async function bootstrap() {
     .setTitle('Hiper Local')
     .setDescription('Api para franqueados')
     .setVersion('1.0')
-    .addTag('Franqueado')
+    .addTag('status')
     .addTag('Clientes')
-    .addTag('Produtos')
+    .addTag('product')
     .build()
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document)
 
 
-  await app.listen(3333);
+  await app.listen(process.env.PORT || 3333);
 }
 bootstrap();
