@@ -7,7 +7,7 @@ import { Client } from "./entities/client.entity";
 @ApiTags('client')
 @Controller('client')
 export class ClientController {
-    constructor(private clientService: ClientService) { }
+    constructor(private readonly clientService: ClientService) { }
 
     @Get()
     @ApiOperation({
@@ -29,8 +29,8 @@ export class ClientController {
     @ApiOperation({
         summary: "Criar um cliente"
     })
-    async create(@Body() createClientDto: CreateClientDto): Promise<Client> {
-        return await this.clientService.create(createClientDto);
+    async create(@Body() data: CreateClientDto): Promise<Client> {
+        return await this.clientService.create(data);
     }
 
     @Put(':id')
@@ -39,9 +39,9 @@ export class ClientController {
     })
     async update(
         @Param('id') id: string,
-        @Body() createClientDto: CreateClientDto,
+        @Body() data: CreateClientDto,
     ): Promise<Client> {
-        return await this.clientService.update(id, createClientDto);
+        return await this.clientService.update(id, data);
     }
 
 

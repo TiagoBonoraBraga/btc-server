@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { CreateClientDto } from "./dto/create-client.dto";
-import { Client } from "./entities/client.entity";
+import { Client } from "@prisma/client";
 
 @Injectable()
 export class ClientService {
@@ -24,26 +24,26 @@ export class ClientService {
     async findOne(id: string): Promise<Client> {
         return this.findById(id);
     }
-    async create(createClientDto: CreateClientDto): Promise<Client> {
-        const existingClient = await this.prisma.client.findUnique({ where: { name: createClientDto.name } });
+    async create(data: CreateClientDto): Promise<Client> {
+        const existingClient = await this.prisma.client.findUnique({ where: { name: data.name } });
         if (existingClient) {
-            throw new Error(`Já existe um cliente com o nome '${createClientDto.name}'.`);
+            throw new Error(`Já existe um cliente com o nome '${data.name}'.`);
         }
 
-        const client = await this.prisma.client.create({ createClientDto });
+        const client = await this.prisma.client.create({ data });
 
         return client;
     }
 
-    async update(id: string, createClientDto: CreateClientDto): Promise<Client> {
-        const existingClient = await this.prisma.client.findUnique({ where: { name: createClientDto.name, } });
+    async update(id: string, data: CreateClientDto): Promise<Client> {
+        const existingClient = await this.prisma.client.findUnique({ where: { name: data.name, } });
         if (existingClient) {
-            throw new Error(`Já existe um cliente com o nome '${createClientDto.name}'.`);
+            throw new Error(`Já existe um cliente com o nome '${data.name}'.`);
         }
 
         const client = await this.prisma.client.update({
             where: { id },
-            createClientDto,
+            data,
         });
 
 
