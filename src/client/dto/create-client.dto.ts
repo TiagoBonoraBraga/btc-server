@@ -30,19 +30,5 @@ export class CreateClientDto {
     })
     idFranchise: string;
 
-    @IsString()
-    @ApiProperty({
-        description: 'Data de quanto o cliente entrou',
-        example: '28/09/1990'
-    })
-    createdAt: string;
-
-    @IsString()
-    @ApiProperty({
-        description: 'Data de quanto o cliente saiu',
-        example: '24/04/2023'
-    })
-    updatedAt: string;
-
 }
 
