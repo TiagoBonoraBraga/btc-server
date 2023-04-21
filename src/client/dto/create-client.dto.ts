@@ -1,37 +1,37 @@
 import { ApiProperty } from "@nestjs/swagger";
 
-export class CreateClientesDto{
+export class CreateClientDto {
 
-    
+
     @ApiProperty({
         description: 'ID do Sistema'
-        
+
     })
-    idSistema: string;
-    
+    idSystem: string;
+
     @ApiProperty({
         description: 'nome do cliente',
         example: 'Felipe Cristo'
     })
-    nome: string;
-    
+    name: string;
+
     @ApiProperty({
         description: 'ID da Franquia'
-        
+
     })
-    idFranquia: string;
-    
+    idFranchise: string;
+
     @ApiProperty({
         description: 'Data de quanto o cliente entrou',
         example: '28/09/1990'
     })
-    dataInicio: string;
-    
+    createdAt: string;
+
     @ApiProperty({
         description: 'Data de quanto o cliente saiu',
         example: '24/04/2023'
     })
-    dataFinal: string;
-   
+    updatedAt: string;
+
 }
 

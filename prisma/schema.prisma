@@ -1,28 +1,28 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
-model clientes {
-  id  String @id @default(uuid())
-  idSistema String @db.VarChar(100)
-  nome String @db.VarChar(100)
-  idFranquia String @db.VarChar(100)
-  dataInicio String @db.VarChar(100)
-  dataFinal String @db.VarChar(100)
+model Client {
+    id          String @id @default(uuid())
+    idSystem    String @db.VarChar(100)
+    name        String @db.VarChar(100)
+    idFranchise String @db.VarChar(100)
 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Product {
-  id          Int    @id @default(autoincrement())
-  name        String @unique
-  description String
-  score       Int
+    id          Int    @id @default(autoincrement())
+    name        String @unique
+    description String
+    score       Int
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
