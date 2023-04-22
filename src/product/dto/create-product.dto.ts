@@ -22,14 +22,14 @@ export class CreateProductDto {
     @IsNumber()
     @ApiProperty({
         description: "score do produto",
-        example: 20
+        example: "20"
     })
-    score: number
+    score: string
 
     @IsNumber()
     @ApiProperty({
         description: "Valor do produto",
-        example: 200
+        example: "200"
     })
-    price: number
+    price: string
 }
