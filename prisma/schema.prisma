@@ -9,9 +9,11 @@ datasource db {
 
 model Client {
     id          String @id @default(uuid())
-    idSystem    String @db.VarChar(100)
-    name        String @unique @db.VarChar(100)
     idFranchise String @db.VarChar(100)
+    name        String @unique @db.VarChar(100)
+    email       String @unique
+    phone        String @unique
+    cpf         String @unique
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

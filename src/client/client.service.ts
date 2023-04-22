@@ -1,7 +1,17 @@
-import { Injectable, NotFoundException } from "@nestjs/common";
+import { HttpException, HttpStatus, Injectable, NotFoundException } from "@nestjs/common";
+import { Client, Prisma } from "@prisma/client";
+import { v4 as uuidv4 } from 'uuid';
+import * as yup from 'yup';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateClientDto } from "./dto/create-client.dto";
-import { Client } from "@prisma/client";
+
+
+const clientSchema = yup.object().shape({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    phone: yup.string().matches(/^\d{11}$/).required(),
+    cpf: yup.string().matches(/^\d{11}$/).required(),
+});
 
 @Injectable()
 export class ClientService {
@@ -25,29 +35,52 @@ export class ClientService {
         return this.findById(id);
     }
     async create(data: CreateClientDto): Promise<Client> {
-        const existingClient = await this.prisma.client.findUnique({ where: { name: data.name } });
-        if (existingClient) {
-            throw new Error(`Já existe um cliente com o nome '${data.name}'.`);
+        try {
+            await clientSchema.validate(data);
+
+            const id = uuidv4();
+            const clientData = { ...data, id };
+            const client = await this.prisma.client.create({ data: clientData });
+
+            return client;
+        } catch (error) {
+            if (error instanceof yup.ValidationError) {
+                // erro de validação dos dados de entrada
+                throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+            } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2002') {
+                    // 409 (Conflito) indica que já existe um registro com a chave primária especificada
+                    throw new HttpException(`Já existe um cliente com o email '${data.email}'.`, HttpStatus.CONFLICT);
+                }
+            }
+            // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
+            throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        const client = await this.prisma.client.create({ data });
-
-        return client;
     }
 
     async update(id: string, data: CreateClientDto): Promise<Client> {
-        const existingClient = await this.prisma.client.findUnique({ where: { name: data.name, } });
-        if (existingClient) {
-            throw new Error(`Já existe um cliente com o nome '${data.name}'.`);
+
+        try {
+            const client = await this.prisma.client.update({
+                where: { id },
+                data,
+            });
+
+
+            return client;
+        } catch (error) {
+            if (error instanceof yup.ValidationError) {
+                // erro de validação dos dados de entrada
+                throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+            } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2002') {
+                    // 409 (Conflito) indica que já existe um registro com a chave primária especificada
+                    throw new HttpException(`Já existe um cliente com o email '${data.email}'.`, HttpStatus.CONFLICT);
+                }
+            }
+            // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
+            throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        const client = await this.prisma.client.update({
-            where: { id },
-            data,
-        });
-
-
-        return client;
     }
 
 

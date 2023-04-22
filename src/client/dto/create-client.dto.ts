@@ -3,18 +3,14 @@ import { IsString, IsUUID } from "class-validator";
 
 export class CreateClientDto {
     @IsUUID()
-    @ApiProperty({
-        description: "Id do cliente",
-        example: 1
-    })
     id: string;
 
     @IsString()
     @ApiProperty({
-        description: 'ID do Sistema'
+        description: 'ID da Franquia'
 
     })
-    idSystem: string;
+    idFranchise: string;
 
     @IsString()
     @ApiProperty({
@@ -25,10 +21,23 @@ export class CreateClientDto {
 
     @IsString()
     @ApiProperty({
-        description: 'ID da Franquia'
-
+        description: 'E-mail do cliente',
+        example: 'felipecristo@hiperlocal.com'
     })
-    idFranchise: string;
+    email: string;
 
+    @IsString()
+    @ApiProperty({
+        description: 'Numero de contato do cliente',
+        example: '62912345678'
+    })
+    phone: string;
+
+    @IsString()
+    @ApiProperty({
+        description: 'CPF do cliente',
+        example: '12345678910'
+    })
+    cpf: string;
 }
 
