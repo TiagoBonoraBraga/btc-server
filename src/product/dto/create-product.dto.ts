@@ -3,10 +3,6 @@ import { IsNumber, IsString, IsUUID } from "class-validator"
 
 export class CreateProductDto {
     @IsUUID()
-    @ApiProperty({
-        description: "Id do produto",
-        example: 1
-    })
     id: number
 
     @IsString()
