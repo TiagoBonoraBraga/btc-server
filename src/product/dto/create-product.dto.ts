@@ -1,13 +1,14 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNumber, IsString } from "class-validator"
+import { IsNumber, IsString, IsUUID } from "class-validator"
 
 export class CreateProductDto {
-
+    
     id: number
 
     @IsString()
     @ApiProperty({
         name: "Nome do produto",
+        description: "Nome do Produto",
         example: "Sistema de NFe"
     })
     name: string
@@ -24,19 +25,19 @@ export class CreateProductDto {
         description: "Comissão do Produto",
         example: 20
     })
-    commission: string
+    commission: number
 
     @IsNumber()
     @ApiProperty({
         description: "Score do produto",
         example: 200
     })
-    score: string
+    score: number
 
     @IsNumber()
     @ApiProperty({
         description: "Valor do produto",
         example: 200
     })
-    price: string
+    price: number
 }
