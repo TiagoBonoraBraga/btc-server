@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { ProductService } from './product.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -33,7 +33,7 @@ export class ProductController {
     return await this.productService.create(data);
   }
 
-  @Put(':id')
+  @Patch(':id')
   @ApiOperation({
     summary: "Atualizar produtos pelo ID"
   })
