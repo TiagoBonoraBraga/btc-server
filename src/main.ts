@@ -1,12 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cors from 'cors';
 import { AppModule } from './app.module';
 
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.use(cors())
+    app.enableCors()
     const config = new DocumentBuilder()
         .setTitle('Hiper Local')
         .setDescription('Api para franqueados')

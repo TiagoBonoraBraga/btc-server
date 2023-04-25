@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
 import { Product } from '@prisma/client';
 import { ProductService } from './product.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
@@ -21,8 +21,8 @@ export class ProductController {
   @ApiOperation({
     summary: "Visualizar produtos por ID"
   })
-  async findOne(@Param('id') id: number): Promise<Product> {
-    return await this.productService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Product> {
+    return await this.productService.findOne(id);
   }
 
   @Post()
@@ -38,17 +38,17 @@ export class ProductController {
     summary: "Atualizar produtos pelo ID"
   })
   async update(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() data: CreateProductDto,
   ): Promise<Product> {
-    return await this.productService.update(+id, data);
+    return await this.productService.update(id, data);
   }
 
   @Delete(':id')
   @ApiOperation({
     summary: "Deletar produtos pelo Id"
   })
-  async delete(@Param('id') id: number) {
-    return await this.productService.delete(+id);
+  async delete(@Param('id') id: string) {
+    return await this.productService.delete(id);
   }
 }

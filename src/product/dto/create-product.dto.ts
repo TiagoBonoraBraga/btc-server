@@ -2,8 +2,8 @@ import { ApiProperty } from "@nestjs/swagger"
 import { IsNumber, IsString, IsUUID } from "class-validator"
 
 export class CreateProductDto {
-    @IsNumber()
-    id: number
+    @IsUUID()
+    id: string
 
     @IsString()
     @ApiProperty({

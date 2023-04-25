@@ -2,12 +2,10 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Product } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
+import { v4 as uuidv4 } from 'uuid';
 
-let count = 0;
 
-function generateId() {  
-    return ++count;
-}
+
 
 @Injectable()
 export class ProductService {
@@ -18,7 +16,7 @@ export class ProductService {
         return this.prisma.product.findMany();
     }
 
-    async findById(id: number): Promise<Product> {
+    async findById(id: string): Promise<Product> {
         const record = await this.prisma.product.findUnique({
             where: { id },
         });
@@ -28,13 +26,13 @@ export class ProductService {
         return record
     }
 
-    async findOne(id: number): Promise<Product> {
+    async findOne(id: string): Promise<Product> {
         return this.findById(id);
     }
 
     async create(data: CreateProductDto): Promise<Product> {
         try {
-            const id = generateId();
+            const id = uuidv4();
             const productData = { ...data, id };
            
             const product = await this.prisma.product.create({ data: productData });
@@ -54,7 +52,7 @@ export class ProductService {
     }
 
 
-    async update(id: number, data: CreateProductDto): Promise<Product> {
+    async update(id: string, data: CreateProductDto): Promise<Product> {
         try {
             const product = await this.prisma.product.update({
                 where: { id },
@@ -74,7 +72,7 @@ export class ProductService {
         }
     }
 
-    async delete(id: number): Promise<Product> {
+    async delete(id: string): Promise<Product> {
         return this.prisma.product.delete({
             where: { id },
         });
