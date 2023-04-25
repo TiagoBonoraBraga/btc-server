@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
-    app.use(cors())
+    app.enableCors();
     const config = new DocumentBuilder()
         .setTitle('Hiper Local')
         .setDescription('Api para franqueados')
