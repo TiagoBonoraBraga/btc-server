@@ -5,7 +5,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 
 let count = 0;
 
-function generateId() {
+function generateId() {  
     return ++count;
 }
 
@@ -36,9 +36,10 @@ export class ProductService {
         try {
             const id = generateId();
             const productData = { ...data, id };
+           
             const product = await this.prisma.product.create({ data: productData });
 
-            return product;
+           return product;
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
