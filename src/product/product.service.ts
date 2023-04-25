@@ -47,7 +47,7 @@ export class ProductService {
                 }
             }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
-            throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new Error(error);
         }
     }
 
