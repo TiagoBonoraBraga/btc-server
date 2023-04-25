@@ -21,7 +21,7 @@ model Client {
 
 model Product {
     id          Int    @id @default(autoincrement())
-    name        String 
+    name        String @unique
     description String
     commission  Int
     score       Int
