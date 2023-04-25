@@ -44,15 +44,15 @@ export class ClientService {
 
             return client;
         } catch (error) {
-            if (error instanceof yup.ValidationError) {
-                // erro de validação dos dados de entrada
-                throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
-            } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
-                if (error.code === 'P2002') {
-                    // 409 (Conflito) indica que já existe um registro com a chave primária especificada
-                    throw new HttpException(`Já existe um cliente com o email '${data.email}'.`, HttpStatus.CONFLICT);
-                }
-            }
+            // if (error instanceof yup.ValidationError) {
+            //     // erro de validação dos dados de entrada
+            //     throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+            // } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            //     if (error.code === 'P2002') {
+            //         // 409 (Conflito) indica que já existe um registro com a chave primária especificada
+            //         throw new HttpException(`Já existe um cliente com o email '${data.email}'.`, HttpStatus.CONFLICT);
+            //     }
+            // }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
             throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
         }
