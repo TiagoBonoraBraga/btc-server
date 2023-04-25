@@ -4,7 +4,7 @@ import { IsNumber, IsString, IsUUID } from "class-validator"
 export class CreateProductDto {
     // @IsNumber()
     // // @IsUUID()
-    // id: number
+    id: number
 
     @IsString()
     @ApiProperty({
