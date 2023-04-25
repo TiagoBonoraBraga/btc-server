@@ -40,12 +40,12 @@ export class ProductService {
 
             return product;
         } catch (error) {
-            // if (error instanceof Prisma.PrismaClientKnownRequestError) {
-            //     if (error.code === 'P2002') {
-            //         // 409 (Conflito) indica que já existe um registro com a chave primária especificada
-            //         throw new HttpException(`Já existe um produto com o nome '${data.name}'.`, HttpStatus.CONFLICT);
-            //     }
-            // }
+            if (error instanceof Prisma.PrismaClientKnownRequestError) {
+                if (error.code === 'P2002') {
+                    // 409 (Conflito) indica que já existe um registro com a chave primária especificada
+                    throw new HttpException(`Já existe um produto com o nome '${data.name}'.`, HttpStatus.CONFLICT);
+                }
+            }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
             throw new Error(error);
         }
