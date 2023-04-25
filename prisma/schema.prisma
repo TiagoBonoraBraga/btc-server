@@ -12,7 +12,7 @@ model Client {
     idFranchise String @db.VarChar(100)
     name        String @unique @db.VarChar(100)
     email       String @unique
-    phone        String @unique
+    phone       String @unique
     cpf         String @unique
 
     createdAt DateTime @default(now())
@@ -21,7 +21,7 @@ model Client {
 
 model Product {
     id          Int    @id @default(autoincrement())
-    name        String @unique
+    name        String
     description String
     commission  Int
     score       Int
