@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 
 
+
 @Injectable()
 export class ProductService {
     constructor(private readonly prisma: PrismaService) { }
@@ -30,21 +31,22 @@ export class ProductService {
         return this.findById(id);
     }
 
-    async create(data: CreateProductDto): Promise<Product> {
+    async create(product: CreateProductDto): Promise<Product> {
         try {
-            const product = await this.prisma.product.create({ data});
+            const createProduct = await this.prisma.product.create({ data: product});
 
-            return product;
+            return createProduct;
         } catch (error) {
+            console.log(error.message)
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
                     // 409 (Conflito) indica que já existe um registro com a chave primária especificada
-                    throw new HttpException(`Já existe um produto com o nome '${data.name}'.`, HttpStatus.CONFLICT);
+                    throw new HttpException(`Já existe um produto com o nome '${product.name}'.`, HttpStatus.CONFLICT);
                 }
             }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
             //throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
-            return error.mes
+            return error.message
         }
     }
 
