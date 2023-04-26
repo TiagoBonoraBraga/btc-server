@@ -32,9 +32,15 @@ export class ProductService {
 
     async create(data: CreateProductDto): Promise<Product> {
         try {
-            const product = await this.prisma.product.create({ data });
+            const product: Product = {
+                ...data,
+                id: undefined,
+                createdAt: undefined,
+                updatedAt: undefined
+            };
 
-            return product;
+            return this.prisma.product
+              .create({ data: product })
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
