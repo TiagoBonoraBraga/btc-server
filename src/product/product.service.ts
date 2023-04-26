@@ -32,8 +32,6 @@ export class ProductService {
 
     async create(data: CreateProductDto): Promise<Product> {
         try {
-
-
             const product = await this.prisma.product.create({ data });
 
             return product;
