@@ -18,7 +18,7 @@ export class ProductService {
 
     async findById(id: string): Promise<Product> {
         const record = await this.prisma.product.findUnique({
-            where: { id },
+            where: {id },
         });
         if (!record) {
             throw new NotFoundException(`Registro com o '${id}' não encontrado.`)
