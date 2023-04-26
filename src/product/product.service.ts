@@ -18,7 +18,7 @@ export class ProductService {
 
     async findById(id: string): Promise<Product> {
         const record = await this.prisma.product.findUnique({
-            where: {id },
+            where: { id },
         });
         if (!record) {
             throw new NotFoundException(`Registro com o '${id}' não encontrado.`)
@@ -32,15 +32,9 @@ export class ProductService {
 
     async create(data: CreateProductDto): Promise<Product> {
         try {
-            const product: Product = {
-                ...data,
-                id: undefined,
-                createdAt: undefined,
-                updatedAt: undefined
-            };
+            const product = await this.prisma.product.create({ data});
 
-            return this.prisma.product
-              .create({ data: product })
+            return product;
         } catch (error) {
             if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
