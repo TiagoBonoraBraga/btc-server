@@ -2,7 +2,6 @@ import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestj
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Product } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
-import { v4 as uuidv4 } from 'uuid';
 
 
 
