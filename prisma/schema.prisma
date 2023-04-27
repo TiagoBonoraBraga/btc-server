@@ -15,7 +15,6 @@ model Client {
     email       String
     phone       String
     cpf         String
-    cnpj        String
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt

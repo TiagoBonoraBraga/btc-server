@@ -40,11 +40,5 @@ export class CreateClientDto {
     })
     cpf: string;
 
-    @IsString()
-    @ApiProperty({
-        description: 'CNPJ do cliente',
-        example: '197198000109'
-    })
-    cnpj: string;
 }
 
