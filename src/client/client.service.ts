@@ -34,12 +34,12 @@ export class ClientService {
     async findOne(id: string): Promise<Client> {
         return this.findById(id);
     }
-    async create(data: CreateClientDto): Promise<Client> {
+    async create(dataClient: CreateClientDto): Promise<Client> {
         try {
-            await clientSchema.validate(data);
+            await clientSchema.validate(dataClient);
 
             const id = uuidv4();
-            const clientData = { ...data, id };
+            const clientData = { ...dataClient, id };
             const client = await this.prisma.client.create({ data: clientData });
 
             return client;
