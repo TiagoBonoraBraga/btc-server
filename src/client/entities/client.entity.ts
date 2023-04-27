@@ -5,7 +5,8 @@ export class Client {
     name: string;
     email: string;
     phone: string;
-    cpf: string;
+    cpf?: string;
+    cnpj?: string;
     createdAt?: Date;
     updatedAt?: Date;
 

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Put } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ClientService } from "./client.service";
 import { CreateClientDto, } from "./dto/create-client.dto";
@@ -25,7 +25,7 @@ export class ClientController {
         return await this.clientService.findOne(id);
     }
 
-    @Post()
+    @Patch()
     @ApiOperation({
         summary: "Criar um cliente"
     })
