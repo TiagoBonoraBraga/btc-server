@@ -5,11 +5,13 @@ import { ProductModule } from './product/product.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ClientModule } from './client/client.module';
 import { FranchiseModule } from './franchise/franchise.module';
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 
 
 
 @Module({
-  imports: [ProductModule, ClientModule, PrismaModule, FranchiseModule],
+  imports: [ProductModule, ClientModule, PrismaModule,FranchiseModule, AuthModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
