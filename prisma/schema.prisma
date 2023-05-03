@@ -8,36 +8,52 @@ datasource db {
 }
 
 model Franchise {
-    id        String   @id @default(uuid())
-    name      String
-    email     String
-    address   String
-    password  String
-    cpf       String
-    cnpj      String
+    id String @id @default(uuid())
+
+    name     String
+    email    String
+    address  String
+    password String
+    cpf      String
+    cnpj     String
+
+    clients Client[]
+
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }
 
 model Client {
-    id          String   @id @default(uuid())
-    idFranchise String   @db.VarChar(100)
-    name        String   @db.VarChar(100)
-    email       String
-    phone       String
-    cpf         String
-    cnpj        String
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+    id String @id @default(uuid())
+
+    name  String
+    email String
+    phone String
+    cpf   String
+    cnpj  String
+
+    idFranchise  Franchise @relation(fields: [franchisesId], references: [id])
+    franchisesId String
+
+    products Product[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
 
 model Product {
-    id          String   @id @default(uuid())
+    id String @id @default(uuid())
+
     name        String
     description String
     commission  Int
     score       Int
     price       Float
-    createdAt   DateTime @default(now())
-    updatedAt   DateTime @updatedAt
+
+    
+    clients  Client @relation(fields: [clientId], references: [id])
+    clientId String
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
 }
