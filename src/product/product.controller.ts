@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
-import { Product } from '@prisma/client';
-import { ProductService } from './product.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Product } from '@prisma/client';
 import { CreateProductDto } from './dto/create-product.dto';
+import { ProductService } from './product.service';
 
 @ApiTags('product')
 @Controller('product')

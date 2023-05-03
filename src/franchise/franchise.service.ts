@@ -47,11 +47,18 @@ export class FranchiseService {
         }
     }
 
-    update(id: string, updateFranchiseDto: UpdateFranchiseDto) {
-        return `This action updates a #${id} franchise`;
+    async update(id: string, data: UpdateFranchiseDto): Promise<Franchise> {
+        try {
+            const franchise = await this.prisma.franchise.update({ where: { id }, data })
+
+            return franchise;
+        } catch (error) {
+            throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 
-    remove(id: string) {
-        return `This action removes a #${id} franchise`;
+    async delete(id: string): Promise<Franchise> {
+        return this.prisma.franchise.delete({ where: { id } })
     }
 }

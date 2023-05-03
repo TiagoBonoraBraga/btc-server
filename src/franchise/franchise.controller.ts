@@ -1,34 +1,52 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { FranchiseService } from './franchise.service';
+import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Franchise } from '@prisma/client';
 import { CreateFranchiseDto } from './dto/create-franchise.dto';
 import { UpdateFranchiseDto } from './dto/update-franchise.dto';
+import { FranchiseService } from './franchise.service';
 
+@ApiTags('franchise')
 @Controller('franchise')
 export class FranchiseController {
   constructor(private readonly franchiseService: FranchiseService) {}
 
-  @Post()
-  create(@Body() createFranchiseDto: CreateFranchiseDto) {
-    return this.franchiseService.create(createFranchiseDto);
-  }
-
   @Get()
-  findAll() {
-    return this.franchiseService.findAll();
+  @ApiOperation({
+    summary: "Listar todos os Franquiado"
+  })
+  async findAll(): Promise<Franchise[]> {
+    return await this.franchiseService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.franchiseService.findOne(id);
+  @ApiOperation({
+    summary: "Visualizar franquiado por ID"
+  })
+  async findOne(@Param('id') id: string): Promise<Franchise> {
+    return await this.franchiseService.findOne(id);
+  }
+
+  @Post()
+  @ApiOperation({
+    summary: "Criar um franquiado"
+  })
+ async create(@Body() createFranchiseDto: CreateFranchiseDto): Promise<Franchise> {
+    return await this.franchiseService.create(createFranchiseDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFranchiseDto: UpdateFranchiseDto) {
-    return this.franchiseService.update(id, updateFranchiseDto);
+  @ApiOperation({
+    summary: "Editar um franquiado pelo ID"
+  })
+ async update(@Param('id') id: string, @Body() data: UpdateFranchiseDto): Promise<Franchise> {
+    return await this.franchiseService.update(id, data);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.franchiseService.remove(id);
+  @ApiOperation({
+    summary: "Deletar um franquiado pelo ID"
+  })
+ async delete(@Param('id') id: string) {
+    return await this.franchiseService.delete(id);
   }
 }
