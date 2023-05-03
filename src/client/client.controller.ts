@@ -33,7 +33,8 @@ export class ClientController {
         return await this.clientService.create(data);
     }
 
-    @(':id')
+    
+    @Patch(':id')
     @ApiOperation({
         summary: "Atualizar dados do cliente pelo ID"
     })
