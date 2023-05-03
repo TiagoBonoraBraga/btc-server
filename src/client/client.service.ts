@@ -3,7 +3,6 @@ import { Client, Prisma } from "@prisma/client";
 import * as yup from 'yup';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateClientDto } from "./dto/create-client.dto";
-import { checkEmailExists } from "../utils/verification";
 
 const email = 'user@example.com';
 

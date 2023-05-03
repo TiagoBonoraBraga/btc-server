@@ -7,6 +7,7 @@ export class Client {
     phone: string;
     cpf?: string;
     cnpj?: string;
+    idProduct: string;
     createdAt?: Date;
     updatedAt?: Date;
 

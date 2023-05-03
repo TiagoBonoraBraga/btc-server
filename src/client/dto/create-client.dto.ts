@@ -46,5 +46,12 @@ export class CreateClientDto {
         example: '197198000109'
     })
     cnpj: string;
+
+    @IsString()
+    @ApiProperty({
+        description: 'Produto vendido para o cliente',
+        example: 'ID DO PRODUTO'
+    })
+    idProduct: string;
 }
 
