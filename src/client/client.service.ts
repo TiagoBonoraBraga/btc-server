@@ -4,7 +4,6 @@ import * as yup from 'yup';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateClientDto } from "./dto/create-client.dto";
 
-const email = 'user@example.com';
 
 @Injectable()
 export class ClientService {
@@ -44,7 +43,9 @@ export class ClientService {
                 }
             }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
-            throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+            //throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
+            
+            return error.message
         }
     }
 

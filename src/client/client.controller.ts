@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ClientService } from "./client.service";
 import { CreateClientDto, } from "./dto/create-client.dto";
@@ -33,7 +33,6 @@ export class ClientController {
         return await this.clientService.create(data);
     }
 
-    
     @Patch(':id')
     @ApiOperation({
         summary: "Atualizar dados do cliente pelo ID"

@@ -1,9 +1,11 @@
 -- CreateTable
 CREATE TABLE "Client" (
     "id" TEXT NOT NULL,
-    "idSystem" VARCHAR(100) NOT NULL,
-    "name" VARCHAR(100) NOT NULL,
     "idFranchise" VARCHAR(100) NOT NULL,
+    "name" VARCHAR(100) NOT NULL,
+    "email" TEXT NOT NULL,
+    "phone" TEXT NOT NULL,
+    "cpf" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -12,7 +14,7 @@ CREATE TABLE "Client" (
 
 -- CreateTable
 CREATE TABLE "Product" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "commission" INTEGER NOT NULL,
@@ -28,4 +30,10 @@ CREATE TABLE "Product" (
 CREATE UNIQUE INDEX "Client_name_key" ON "Client"("name");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Product_name_key" ON "Product"("name");
+CREATE UNIQUE INDEX "Client_email_key" ON "Client"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Client_phone_key" ON "Client"("phone");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Client_cpf_key" ON "Client"("cpf");
