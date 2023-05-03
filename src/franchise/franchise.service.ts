@@ -1,19 +1,19 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
+import { Prisma, Franchise } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateFranchiseDto } from './dto/create-franchise.dto';
+import { UpdateFranchiseDto } from './dto/update-franchise.dto';
 
 @Injectable()
-export class UserService {
+export class FranchiseService {
     constructor(private readonly prisma: PrismaService) { }
 
-    async findAll(): Promise<User[]> {
-        return this.prisma.user.findMany();
+    async findAll(): Promise<Franchise[]> {
+        return this.prisma.franchise.findMany();
     }
 
-    async findById(id: string): Promise<User> {
-        const record = await this.prisma.user.findUnique({
+    async findById(id: string): Promise<Franchise> {
+        const record = await this.prisma.franchise.findUnique({
             where: { id },
         });
         if (!record) {
@@ -22,14 +22,14 @@ export class UserService {
         return record
     }
 
-    async findOne(id: string): Promise<User> {
+    async findOne(id: string): Promise<Franchise> {
         return this.findById(id);
     }
 
-    async create(user: CreateUserDto): Promise<User> {
+    async create(franchise: CreateFranchiseDto): Promise<Franchise> {
         try {
-            const createUser = await this.prisma.user.create({ data: user });
-            return createUser;
+            const createFranchise = await this.prisma.franchise.create({ data: franchise });
+            return createFranchise;
         } catch (error) {
             if (error) {
                 // erro de validação dos dados de entrada
@@ -37,7 +37,7 @@ export class UserService {
             } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
                 if (error.code === 'P2002') {
                     // 409 (Conflito) indica que já existe um registro com a chave primária especificada
-                    throw new HttpException(`Já existe um cliente com o nome '${client.email}'.`, HttpStatus.CONFLICT);
+                    throw new HttpException(`Já existe um cliente com o nome '${franchise.email}'.`, HttpStatus.CONFLICT);
                 }
             }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
@@ -47,11 +47,11 @@ export class UserService {
         }
     }
 
-    update(id: string, updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
+    update(id: string, updateFranchiseDto: UpdateFranchiseDto) {
+        return `This action updates a #${id} franchise`;
     }
 
     remove(id: string) {
-        return `This action removes a #${id} user`;
+        return `This action removes a #${id} franchise`;
     }
 }
