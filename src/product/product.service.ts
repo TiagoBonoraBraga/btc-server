@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
 import { Prisma, Product } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
 import { CreateProductDto } from './dto/create-product.dto';
 
 
@@ -32,7 +32,13 @@ export class ProductService {
 
     async create(product: CreateProductDto): Promise<Product> {
         try {
-            const createProduct = await this.prisma.product.create({ data: product});
+            const { idClient, ...Product } = product;
+            const createProduct = await this.prisma.product.create({
+                data: {
+                    ...Product,
+                    idClient: { connect: { id: idClient } }, // aqui estamos conectando o id da franquia ao cliente
+                },
+            });
 
             return createProduct;
         } catch (error) {
@@ -52,9 +58,13 @@ export class ProductService {
 
     async update(id: string, data: CreateProductDto): Promise<Product> {
         try {
+            const { idClient, ...Product } = data;
             const product = await this.prisma.product.update({
                 where: { id },
-                data,
+                data: {
+                    ...Product,
+                    idClient: { connect: { id: idClient } }, // aqui estamos conectando o id da franquia ao cliente
+                },
             });
 
             return product;

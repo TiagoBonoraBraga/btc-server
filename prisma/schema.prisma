@@ -51,7 +51,7 @@ model Product {
     price       Float
 
     
-    clients  Client @relation(fields: [clientId], references: [id])
+    idClient  Client @relation(fields: [clientId], references: [id])
     clientId String
 
     createdAt DateTime @default(now())

@@ -28,12 +28,17 @@ export class ClientService {
     }
     async create(client: CreateClientDto): Promise<Client> {
         try {
-            
-            const createClient = await this.prisma.client.create({ data: client });
+            const { idFranchise, ...Client } = client;
+            const createClient = await this.prisma.client.create({
+                data: {
+                    ...Client,
+                    idFranchise: { connect: { id: idFranchise } }, // aqui estamos conectando o id da franquia ao cliente
+                },
+            });
 
             return createClient;
         } catch (error) {
-            if (error ) {
+            if (error) {
                 // erro de validação dos dados de entrada
                 throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
             } else if (error instanceof Prisma.PrismaClientKnownRequestError) {
@@ -44,7 +49,7 @@ export class ClientService {
             }
             // 500 (Erro interno do servidor) é usado como um fallback para erros desconhecidos
             //throw new HttpException('Erro interno do servidor', HttpStatus.INTERNAL_SERVER_ERROR);
-            
+
             return error.message
         }
     }
@@ -52,9 +57,13 @@ export class ClientService {
     async update(id: string, data: CreateClientDto): Promise<Client> {
 
         try {
+            const { idFranchise, ...Client } = data;
             const client = await this.prisma.client.update({
                 where: { id },
-                data,
+                data: {
+                    ...Client,
+                    idFranchise: { connect: { id: idFranchise } }, // aqui estamos conectando o id da franquia ao cliente
+                },
             });
 
 

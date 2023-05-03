@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/commo
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { ClientService } from "./client.service";
 import { CreateClientDto, } from "./dto/create-client.dto";
-import { Client } from "./entities/client.entity";
+import { Client } from "@prisma/client";
 
 @ApiTags('client')
 @Controller('client')
@@ -29,8 +29,8 @@ export class ClientController {
     @ApiOperation({
         summary: "Criar um cliente"
     })
-    async create(@Body() data: CreateClientDto): Promise<Client> {
-        return await this.clientService.create(data);
+    async create(@Body() client: CreateClientDto): Promise<Client> {
+        return await this.clientService.create(client);
     }
 
     @Patch(':id')

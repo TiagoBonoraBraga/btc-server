@@ -7,13 +7,6 @@ export class CreateClientDto {
 
     @IsString()
     @ApiProperty({
-        description: 'ID da Franquia'
-
-    })
-    idFranchise: string;
-
-    @IsString()
-    @ApiProperty({
         description: 'nome do cliente',
         example: 'Felipe Cristo'
     })
@@ -40,5 +33,18 @@ export class CreateClientDto {
     })
     cpf: string;
 
+    @IsString()
+    @ApiProperty({
+        description: 'CNPJ do cliente',
+        example: '12345678910'
+    })
+    cnpj: string;
+
+    @IsString()
+    @ApiProperty({
+        description: 'Id do franquiado',
+        example: ' '
+    })
+    idFranchise: string;
 }
 
