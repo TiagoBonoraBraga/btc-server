@@ -13,8 +13,6 @@ export class AuthService {
     private readonly jwtService: JwtService
   ) {}
 
- /* async login(email: string, password: string): Promise<LoginDto> {
-    const user = await this.prisma.user.findUnique({ where: { email } });*/
   async login(loginDto: LoginDto): Promise<LoginResponseDto> {
     const { email, password } = loginDto;
 
