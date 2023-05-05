@@ -32,12 +32,8 @@ export class ProductService {
 
     async create(product: CreateProductDto): Promise<Product> {
         try {
-            const { idClient, ...Product } = product;
             const createProduct = await this.prisma.product.create({
-                data: {
-                    ...Product,
-                    idClient: { connect: { id: idClient } }, // aqui estamos conectando o id da franquia ao cliente
-                },
+                data: product
             });
 
             return createProduct;
@@ -58,13 +54,9 @@ export class ProductService {
 
     async update(id: string, data: CreateProductDto): Promise<Product> {
         try {
-            const { idClient, ...Product } = data;
             const product = await this.prisma.product.update({
                 where: { id },
-                data: {
-                    ...Product,
-                    idClient: { connect: { id: idClient } }, // aqui estamos conectando o id da franquia ao cliente
-                },
+                data
             });
 
             return product;

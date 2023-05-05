@@ -17,10 +17,9 @@ model Franchise {
     cpf      String
     cnpj     String
 
-    clients Client[]
-
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    Client    Client[]
 }
 
 model Client {
@@ -32,10 +31,11 @@ model Client {
     cpf   String
     cnpj  String
 
-    idFranchise  Franchise @relation(fields: [franchisesId], references: [id])
-    franchisesId String
+    franchise   Franchise? @relation(fields: [idFranchise], references: [id])
+    idFranchise String?
 
-    products Product[]
+    product   Product? @relation(fields: [idProduct], references: [id])
+    idProduct String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -50,12 +50,9 @@ model Product {
     score       Int
     price       Float
 
-    
-    idClient  Client @relation(fields: [clientId], references: [id])
-    clientId String
-
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
+    Client    Client[]
 }
 
 model User {

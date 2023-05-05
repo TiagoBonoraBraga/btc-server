@@ -7,8 +7,8 @@ export class Client {
     phone: string;
     cpf?: string;
     cnpj?: string;
-    idFranchise: Franchise;
-    products: Product[];
+    idFranchise?: Franchise;
+    idProduct?: Product;
     createdAt?: Date;
     updatedAt?: Date;
 

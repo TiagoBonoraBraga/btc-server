@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { Franchise, Product } from "@prisma/client";
 import { IsString, IsUUID } from "class-validator";
 
 export class CreateClientDto {
@@ -40,11 +41,18 @@ export class CreateClientDto {
     })
     cnpj: string;
 
-    @IsString()
+    
     @ApiProperty({
         description: 'Id do franquiado',
         example: ' '
     })
-    idFranchise: string;
+    idFranchise: Franchise;
+
+    
+    @ApiProperty({
+        description: 'Id do Produto',
+        example: ' '
+    })
+    idProduct: Product;
 }
 

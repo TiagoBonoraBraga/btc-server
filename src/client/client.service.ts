@@ -3,6 +3,8 @@ import { Client, Prisma } from "@prisma/client";
 import * as yup from 'yup';
 import { PrismaService } from "../prisma/prisma.service";
 import { CreateClientDto } from "./dto/create-client.dto";
+import { Franchise } from "src/franchise/entities/franchise.entity";
+import { Product } from "src/product/entities/product.entity";
 
 
 @Injectable()
@@ -28,11 +30,13 @@ export class ClientService {
     }
     async create(client: CreateClientDto): Promise<Client> {
         try {
-            const { idFranchise, ...Client } = client;
+            const { idFranchise, idProduct, ...Client } = client;
+
             const createClient = await this.prisma.client.create({
                 data: {
                     ...Client,
-                    idFranchise: { connect: { id: idFranchise } }, // aqui estamos conectando o id da franquia ao cliente
+                    franchise: { connect: { id: idFranchise.id } },
+                    product: { connect: { id: idProduct.id} }, // aqui estamos conectando o id da franquia ao cliente
                 },
             });
 
@@ -57,12 +61,13 @@ export class ClientService {
     async update(id: string, data: CreateClientDto): Promise<Client> {
 
         try {
-            const { idFranchise, ...Client } = data;
+            const { idFranchise, idProduct, ...Client } = data;
             const client = await this.prisma.client.update({
                 where: { id },
                 data: {
                     ...Client,
-                    idFranchise: { connect: { id: idFranchise } }, // aqui estamos conectando o id da franquia ao cliente
+                    franchise: { connect: { id: idFranchise.id } },
+                    product: { connect: { id: idProduct.id } }, // aqui estamos conectando o id da franquia ao cliente
                 },
             });
 

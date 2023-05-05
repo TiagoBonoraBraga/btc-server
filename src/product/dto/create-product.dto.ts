@@ -38,10 +38,4 @@ export class CreateProductDto {
     })
     price: number
 
-    @IsString()
-    @ApiProperty({
-        description: 'Id do franquiado',
-        example: ' '
-    })
-    idClient: string;
 }
