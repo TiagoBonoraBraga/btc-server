@@ -24,11 +24,11 @@ model Franchise {
 model Client {
     id String @id @default(uuid())
 
-    name  String
-    email String
-    phone String
-    cpf   String
-    cnpj  String
+    name  String?
+    email String?
+    phone String?
+    cpf   String?
+    cnpj  String?
 
 
     createdAt DateTime @default(now())
