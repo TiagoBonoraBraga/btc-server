@@ -19,7 +19,6 @@ model Franchise {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Client    Client[]
 }
 
 model Client {
@@ -31,11 +30,6 @@ model Client {
     cpf   String
     cnpj  String
 
-    franchise   Franchise? @relation(fields: [idFranchise], references: [id])
-    idFranchise String?
-
-    product   Product? @relation(fields: [idProduct], references: [id])
-    idProduct String?
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -52,7 +46,6 @@ model Product {
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
-    Client    Client[]
 }
 
 model User {

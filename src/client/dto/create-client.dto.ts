@@ -42,17 +42,5 @@ export class CreateClientDto {
     cnpj: string;
 
     
-    @ApiProperty({
-        description: 'Id do franquiado',
-        example: ' '
-    })
-    idFranchise: Franchise;
-
-    
-    @ApiProperty({
-        description: 'Id do Produto',
-        example: ' '
-    })
-    idProduct: Product;
 }
 
